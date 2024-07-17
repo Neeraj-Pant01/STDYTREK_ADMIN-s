@@ -101,7 +101,7 @@ const Register = () => {
   }
 
   return (
-    <div className='flex flex-col px-20 gap-10 bg-[url("https://www.iave.org/iavewp/wp-content/uploads/2020/06/purple-background-registration.png")] bg-no-repeat bg-cover h-screen'>
+    <div className='flex flex-col items-center md:items-start md:px-20 gap-10 bg-[url("https://www.iave.org/iavewp/wp-content/uploads/2020/06/purple-background-registration.png")] bg-no-repeat bg-cover h-screen'>
       <h1 className='text-2xl mt-2 text-[white] font-extrabold'>REGISTER AS SELLER</h1>
       <form action="" className='flex flex-col gap-2'>
         <div className='flex flex-col relative w-32 h-32 border-2 rounded-lg mb-3'>

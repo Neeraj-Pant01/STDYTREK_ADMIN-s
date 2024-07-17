@@ -85,6 +85,7 @@ const Profile = () => {
                 setUpdated(false)
             }, 5000);
         } catch (err) {
+            setLoading(false)
             console.log(err)
         }
     }
@@ -138,11 +139,14 @@ const Profile = () => {
 
     useEffect(() => {
         const getCourses = async () => {
+            setLoading(true)
             try {
                 const res = await api.get(`${import.meta.env.VITE_REACT_APP_API_URL}api/v1/courses?userId=${id}`)
                 setCourses(res.data)
+                setLoading(false)
             } catch (err) {
                 console.log(err)
+                setLoading(false)
             }
         }
         getCourses()
@@ -150,22 +154,25 @@ const Profile = () => {
 
     useEffect(() => {
         const getBlogs = async () => {
+            setLoading(true)
             try {
                 const res = await api.get(`${import.meta.env.VITE_REACT_APP_API_URL}api/v1/blogs/all`)
                 setBlogs(res.data)
+                setLoading(false)
             } catch (err) {
+                setLoading(false)
                 console.log(err)
             }
         }
         getBlogs()
     }, [])
     return (
-        <div className='flex px-20 gap-20 bg-grey m-0 py-10 bg-50% bg-center bg-no-repeat' style={{ minHeight: "80vh" }}>
+        <div className='flex md:flex-row flex-col md:px-20 px-2 gap-20 bg-grey m-0 py-10 bg-50% bg-center bg-no-repeat' style={{ minHeight: "80vh" }}>
 
             {/* prile-details */}
             <div className='flex flex-col gap-10'>
                 <div className='flex flex-col w-fit px-11'>
-                    <div className='flex w-40 h-40 rounded-lg border-4 border-purple-500 justify-center items-center relative'>
+                    <div className='flex md:w-40 md:h-40 w-[150px] h-[150px] rounded-lg border-4 border-purple-500 justify-center items-center relative'>
                         <img src={file ? URL.createObjectURL(file) : currentUser?.profilepic} alt="" className='w-full h-full rounded-lg' />
                         <label htmlFor='file' className='self-center absolute bottom-0'><AiFillCamera className='self-center text-4xl text-black cursor-pointer' /></label>
                     </div>
@@ -175,7 +182,11 @@ const Profile = () => {
 
                 {/* update user's info */}
                 <div className='bg-inherit'>
-                    <form onSubmit={handleUpdate} ref={formRef} className='flex flex-col w-96 gap-5 outline-none'>
+                    {
+                        locading ?
+                        <div>Loading...</div>
+                        :
+                        <form onSubmit={handleUpdate} ref={formRef} className='flex flex-col md:w-96 gap-5 outline-none'>
 
                         <input className='text-[#827d7d] border rounded-md border-[#aca5a5] outline-none px-5 py-2' type='text' name='username' value={userDetails.username} onChange={handleChange} />
 
@@ -185,6 +196,7 @@ const Profile = () => {
 
                         <button className='py-2 text-white bg-purple-700 text-lg border-2 border-[#aca5a5] rounded-md' >update</button>
                     </form>
+                    }
                     {
                         locading &&
                         <b className='text-[blue] text-xl mt-8 flex gap-2 items-center'>Loading...<AiOutlineLoading className='text-2xl font-extrabold' /></b>
@@ -196,38 +208,44 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className='flex w-full h-full text-[#827d7d] px-16'>
+            <div className='flex w-full h-full text-[#827d7d] md:px-16'>
                 <div className='flex flex-col gap-5 text-[#aca5a5]'>
                     <h1 className='text-[#313131] text-xl'>total courses uploaded ({courses.length})</h1>
                     <div className='flex flex-col gap-5'>
                         {
-                            courses.length > 0 && courses.map((c) => {
-                                return (
-                                    <div key={c.price} className='flex items-center justify-between' style={{width:"400px"}}>
-                                        <span className='text-[blue]' to={`${c._id}`}>{c.name}</span>
-                                        <Link>
-                                        <AiFillEye className='text-[green] text-2xl cursor-pointer'/>
-                                        </Link>
-                                        <AiFillDelete className='text-[tomato] text-2xl cursor-pointer'/>
-                                    </div>
-                                )
-                            })
+                            locading ?
+                                <div>Loading...</div>
+                                :
+                                courses.length > 0 && courses.map((c) => {
+                                    return (
+                                        <div key={c.price} className='flex items-center justify-between md:w-[400px]'>
+                                            <span className='text-[blue]' to={`${c._id}`}>{c.name}</span>
+                                            <Link>
+                                                <AiFillEye className='text-[green] text-2xl cursor-pointer' />
+                                            </Link>
+                                            <AiFillDelete className='text-[tomato] text-2xl cursor-pointer' />
+                                        </div>
+                                    )
+                                })
                         }
                     </div>
                     <h1 className='text-[#313131] text-xl'>Blogs Written ({blogs.length})</h1>
                     {
-                            blogs.length > 0 && blogs.map((b) => {
-                                return (
-                                    <div key={b._id} className='flex items-center justify-between'>
-                                        <span className='text-[blue]' to={`${b._id}`}>{b.title}</span>
-                                        <Link>
-                                        <AiFillEye className='text-[green] text-2xl cursor-pointer'/>
-                                        </Link>
-                                        <AiFillDelete className='text-[tomato] text-2xl cursor-pointer'/>
-                                    </div>
-                                )
-                            })
-                        }
+                        locading ?
+                        <div >Loading...</div>
+                        :
+                        blogs.length > 0 && blogs.map((b) => {
+                            return (
+                                <div key={b._id} className='flex items-center justify-between'>
+                                    <span className='text-[blue]' to={`${b._id}`}>{b.title}</span>
+                                    <Link>
+                                        <AiFillEye className='text-[green] text-2xl cursor-pointer' />
+                                    </Link>
+                                    <AiFillDelete className='text-[tomato] text-2xl cursor-pointer' />
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>

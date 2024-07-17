@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='flex gap-16 bg-[#e5e0e0] text-black px-20 py-10 justify-between'>
+    <div className='flex gap-16 bg-[#e5e0e0] text-black px-6 md:px-20 py-10 justify-between'>
       <div>
         <b>Usefull Links</b>
       </div>

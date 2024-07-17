@@ -108,9 +108,9 @@ const Upload = () => {
   }, [uploaded && pictureUrl])
 
   return (
-    <div className='flex flex-col gap-5 px-20'>
+    <div className='flex flex-col gap-5 px-2 mb-3 md:px-20'>
       <h1 className='text-2xl text-[#827d7d] my-6'>upload a new course</h1>
-      <div className='flex items-center justify-center border-2 w-52 h-52 rounded-lg relative'>
+      <div className='flex items-center px-8 md:px-0 justify-center border-2 md:w-52 md:h-52 rounded-lg relative'>
         <label htmlFor='id' className='cursor-pointer w-full h-full'>
           <img src={picture ? URL.createObjectURL(picture) : "/preview.png"} alt="" className='flex w-full h-full rounded-md' />
         </label>
@@ -123,17 +123,17 @@ const Upload = () => {
       {uploadPerc > 0 ? <span className='text-[#827d7d]'>{"uploading " + Math.floor(uploadPerc)}</span> : <span className='text-[#827d7d]'>upload course picture</span>}
 
       <form className='flex flex-col gap-5' onSubmit={handleupload}>
-        <input type='text' name='name' placeholder='enter course name' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='text' name='name' placeholder='enter course name' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='text' name="desc" placeholder='enter course desc..' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='text' name="desc" placeholder='enter course desc..' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='number' name='price' placeholder='enter course price' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='number' name='price' placeholder='enter course price' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='text' name='notes' placeholder='enter notes pdf link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='text' name='notes' placeholder='enter notes pdf link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='text' name='lectures' placeholder='enter video lectures link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='text' name='lectures' placeholder='enter video lectures link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='text' name='testSeries' placeholder='enter test series question papers drive link' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md w-96' onChange={handleChange} />
+        <input type='text' name='testSeries' placeholder='enter test series question papers drive link' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
         <button className=' bg-purple-700 w-fit px-16 py-3 rounded-md text-white cursor-pointer'>{error ? <AiFillCiCircle color='red' fontSize="24px" /> : "upload"}</button>
         {
