@@ -32,7 +32,7 @@ const Blog = () => {
       <div className='flex md:flex-row flex-col gap-10'>
       <form className='flex flex-col gap-10 md:w-96' onSubmit={handlePost}>
         <input className='py-3 px-4 border outline-none rounded-md text-[grey]' type='text' placeholder='enter the title' onChange={(e)=>setTitle(e.target.value)}/>
-      <textarea className='px-4 py-3 border outline-none rounded-md resize-none text-[grey]' placeholder='enter the title' rows={10} cols={60} onChange={(e)=>setBlog(e.target.value)}/>
+      <textarea className='px-4 py-3 border outline-none rounded-md resize-none text-[grey]' placeholder='enter the description' rows={10} cols={60} onChange={(e)=>setBlog(e.target.value)}/>
       <button className='border border-[purple] border-1 rounded-md py-2 text-[purple] font-bold'>post</button>
         </form>
         <div className='flex flex-col mb-4 border px-4 py-3 text-[grey] w-full overflow-hidden min-h-[200px]'>

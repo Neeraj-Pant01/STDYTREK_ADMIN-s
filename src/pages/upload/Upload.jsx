@@ -9,6 +9,7 @@ const Upload = () => {
   const [error, setError] = useState(null)
   const [picture, setPicture] = useState(null)
   const [uploaded, setUploaded] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [pictureUrl, setPictureUrl] = useState()
   const [courseDetails, setCourseDetails] = useState({
     name: "",
@@ -16,7 +17,9 @@ const Upload = () => {
     price: "",
     notes: "",
     lectures: "",
-    testSeries: ""
+    testSeries: "",
+    interviewQuestions:"",
+    features:""
   })
   const [uploadPerc, setUploadPerc] = useState(0);
   const navigate = useNavigate()
@@ -79,6 +82,7 @@ const Upload = () => {
   }
 
   const uploadCourse = async () => {
+    setLoading(true)
     try {
       const res = await api.post(`api/v1/courses/upload`, {
         userId: user._id, picture: pictureUrl, ...courseDetails
@@ -92,7 +96,9 @@ const Upload = () => {
           })
         }, 500);
       }
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
       console.log(err)
       setError(206)
       setTimeout(() => {
@@ -110,6 +116,7 @@ const Upload = () => {
   return (
     <div className='flex flex-col gap-5 px-2 mb-3 md:px-20'>
       <h1 className='text-2xl text-[#827d7d] my-6'>upload a new course</h1>
+
       <div className='flex items-center px-8 md:px-0 justify-center border-2 md:w-52 md:h-52 rounded-lg relative'>
         <label htmlFor='id' className='cursor-pointer w-full h-full'>
           <img src={picture ? URL.createObjectURL(picture) : "/preview.png"} alt="" className='flex w-full h-full rounded-md' />
@@ -122,6 +129,8 @@ const Upload = () => {
 
       {uploadPerc > 0 ? <span className='text-[#827d7d]'>{"uploading " + Math.floor(uploadPerc)}</span> : <span className='text-[#827d7d]'>upload course picture</span>}
 
+      <b className='text-sm text-[black] my-6'>here we have taken google drive as example but you can use your any cloud storage which is easy accessable to users</b>
+
       <form className='flex flex-col gap-5' onSubmit={handleupload}>
         <input type='text' name='name' placeholder='enter course name' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
@@ -131,16 +140,24 @@ const Upload = () => {
 
         <input type='text' name='notes' placeholder='enter notes pdf link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
-        <input type='text' name='lectures' placeholder='enter video lectures link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
+        <input type='text' name='lectures' placeholder='enter video lectures link of google drive folder' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
         <input type='text' name='testSeries' placeholder='enter test series question papers drive link' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange} />
 
+        <input type='text' name='interviewQuestions' placeholder='enter interviewquestions pdf link of google drive' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96' onChange={handleChange}/>
+
+        <textarea type='text' name='features' placeholder='enter course features use comma(,) to seperate features' className='px-5 py-2 border border-[#827d7d] outline-none rounded-md md:w-96 h-[200px]' onChange={handleChange}/>
+        {
+          loading ?
+          <div className='text-[teal]'>upLoading please wait ...</div>
+          :  
         <button className=' bg-purple-700 w-fit px-16 py-3 rounded-md text-white cursor-pointer'>{error ? <AiFillCiCircle color='red' fontSize="24px" /> : "upload"}</button>
+        }
         {
           error && <p style={{ color: 'red' }}>{error === 204 ? "image not uploaded try again" : "something went wrong try again"}</p>
         }
         {
-
+           
         }
       </form>
     </div>
