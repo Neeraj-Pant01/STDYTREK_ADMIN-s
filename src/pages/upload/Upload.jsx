@@ -30,7 +30,7 @@ const Upload = () => {
 
   const handleupload = (e) => {
     e.preventDefault()
-
+    setLoading(true)
     if (picture) {
       const storage = getStorage();
       const fileName = new Date().getTime() + picture.name;
@@ -60,12 +60,14 @@ const Upload = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             setPictureUrl(downloadURL)
+            setLoading(false)
             setUploaded(true)
           });
         }
       );
     } else {
       setError(204);
+      setLoading(false)
       setTimeout(() => {
         setError(null)
       }, 10000);
