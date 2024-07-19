@@ -39,6 +39,8 @@ const Login = () => {
     <div className='h-screen bg-[purple] md:px-20 flex flex-col items-center md:items-start md:justify-normal py-28'>
       <h1 className='text-[white] text-2xl font-extrabold py-7'>SIGN IN TO YOUR ACCOUNT </h1>
 
+      <a href='https://main--study-trek.netlify.app/' className='underline'>Login as Student or Learner</a>
+
       <b className='flex my-5 text-[lightgrey]'>don't have an account ? <span><Link to={`/register`} className='text-[white]'>&nbsp; Register here !</Link></span></b>
 
       <input type='text' ref={emailRef} placeholder='enter your email' className='outline-none border-2 border-[white] py-2 px-4 rounded-md' style={{width:"330px"}}/>
